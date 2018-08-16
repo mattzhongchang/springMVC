@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <!-- 指定log4j配置文件log4j.properties的位置（如果是在classpath根路径下，可以不配置） -->
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+    
+    <context-param>  
+    <description>设置日志文件中，取系统根目录的key</description>  
+    <param-name>webAppRootKey</param-name>  
+    <param-value>springMVC</param-value>  
+</context-param>  
+    
+   
+    <!--Spring MVC 前置Servlet，中心控制器 -->
+	<servlet>
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!--Spring MVC配置文件路径 -->
+			<param-value>
+			classpath:/WEB-INF/springMVC-servlet.xml
+			classpath:/WEB-INF/applicationContext.xml
+			</param-value>
+		</init-param>
+		<!-- 启动动优先级，越小越早加载 -->
+		<!-- 
+		<load-on-startup>1</load-on-startup>
+		 -->
+		<!--Servlet3.0以上文件上传配置 -->
+	</servlet>
+	
+	<!-- Servlet访问的路径映射，所有的访问都必须经过调度用的前置控制品 -->
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+   
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
